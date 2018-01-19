@@ -937,23 +937,16 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 const api = __webpack_require__(9)
-
-const gradientMap = function(){
-  let tone1 = {red: 0, green: 0, blue: 0}
-  let tone2 = {red: 240, green: 132, blue: 20}
-  let gradient = []
-  //build an array of length 256 between color 1 and color 2 to match the values from 0 to 255
-  for (let k = 0; k < (256 * 4); k += 4){
-    gradient[k] = ((256 - (k / 4)) * tone1.red + (k / 4) * tone2.red) / 256
-    gradient[k + 1] = ((256 - (k / 4)) * tone1.green + (k / 4) * tone2.green) / 256
-    gradient[k + 2] = ((256 - (k / 4)) * tone1.blue + (k / 4) * tone2.blue) / 256
-    gradient[k + 3] = 255
-  }
-  return gradient
-}
+const color = __webpack_require__(29)
 
 let canvas = document.getElementById('canvasId')
 let ctx = canvas.getContext('2d')
+let img = document.getElementById('myImage')
+
+
+let staticColor1 = document.getElementById('color1').value
+let staticColor2 = document.getElementById('color2').value
+console.log('STATICCOLOR2 IS ', staticColor2)
 
 document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
   evt.preventDefault()
@@ -962,15 +955,11 @@ document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
 
   api.uploadFile(formData)
   .then((response) => {
-    let img = document.getElementById('myImage')
+    //let img = document.getElementById('myImage')
     img.src = response.data
     return img
   })
   .then(img => {
-    console.log('GOT IMG')
-    console.dir(img)
-    console.log('canvas is ', canvas)
-
     canvas.height = img.height
     canvas.width = img.width
     ctx.drawImage(img, 0, 0)
@@ -981,33 +970,44 @@ document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
   })
   .then(pixelsObj => {
     //convert to grayscale
-    let data = pixelsObj.data
-    console.log('DATA is ', data)
-    for (let i = 0; i < data.length; i += 4){
-      let red = data[i]
-      let green = data[i + 1]
-      let blue = data[i + 2]
-      let average = ((1 / 3) * red) + ( (1 / 3) * green) + ((1 / 3) * blue)
-      data[i] = data[i + 1] = data[i + 2] = average
-    }
+   // pixelsObj.data = convertToGrayScale(pixelsObj.data)
+    pixelsObj.data = color.processImg(staticColor1, staticColor2, pixelsObj.data)
     ctx.putImageData(pixelsObj, 0, 0)
     return pixelsObj
   })
   .then(pixelsObj => {
     //duotones
-    let duoGradient = gradientMap()
-    let duoData = pixelsObj.data
-    for (let z = 0; z < duoData.length; z += 4){
-      duoData[z] = duoGradient[duoData[z] * 4]
-      duoData[z + 1] = duoGradient[duoData[z + 1] * 4 + 1]
-      duoData[z + 2] = duoGradient[duoData[z + 2] * 4 + 1]
-    }
-    ctx.putImageData(pixelsObj, 0, 0)
+
     return pixelsObj
   })
   .catch(err => console.error(err))
 })
 
+//function that takes in two hex color values and an array of pixel data and outputs an array of pixel data in duotone for given colors
+
+document.getElementById('color1').addEventListener('change', function(evt){
+  canvas.height = img.height
+  canvas.width = img.width
+  ctx.drawImage(img, 0, 0)
+
+  let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
+  staticColor1 = evt.target.value
+  pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
+  ctx.putImageData(pixelsChange, 0, 0)
+
+})
+
+document.getElementById('color2').addEventListener('change', function(evt){
+  canvas.height = img.height
+  canvas.width = img.width
+  ctx.drawImage(img, 0, 0)
+
+  let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
+  staticColor2 = evt.target.value
+  pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
+  ctx.putImageData(pixelsChange, 0, 0)
+
+})
 
 
 /***/ }),
@@ -1023,13 +1023,7 @@ const uploadFile = (data) => {
     .catch(err => console.error(err))
 }
 
-// const sayHello = () =>
-//  axios.get('/api/hello')
-//     .then(response => response)
-//     .catch(err => console.error(err))
-
 module.exports = {
-  // sayHello,
   uploadFile
 }
 
@@ -1922,6 +1916,77 @@ module.exports = function spread(callback) {
     return callback.apply(null, arr);
   };
 };
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+const hexToRGB = (hex) => {
+  let red = parseInt(hex.slice(1, 3), 16),
+      green = parseInt(hex.slice(3, 5), 16),
+      blue = parseInt(hex.slice(5, 7), 16)
+  return {red, green, blue}
+}
+
+const gradientMap = (color1, color2) => {
+  let gradient = []
+  //build an array of length 256 between color 1 and color 2 to match the values from 0 to 255
+  for (let k = 0; k < (256 * 4); k += 4){
+    gradient[k] = ((256 - (k / 4)) * color1.red + (k / 4) * color2.red) / 256
+    gradient[k + 1] = ((256 - (k / 4)) * color1.green + (k / 4) * color2.green) / 256
+    gradient[k + 2] = ((256 - (k / 4)) * color1.blue + (k / 4) * color2.blue) / 256
+    gradient[k + 3] = 255
+  }
+  return gradient
+}
+
+const convertToGrayScale = (data) => {
+  for (let i = 0; i < data.length; i += 4){
+    let red = data[i]
+    let green = data[i + 1]
+    let blue = data[i + 2]
+    let average = ((1 / 3) * red) + ( (1 / 3) * green) + ((1 / 3) * blue)
+    data[i] = data[i + 1] = data[i + 2] = average
+  }
+  return data
+}
+
+const convertToDuotone = (gradient, data) => {
+  for (let i = 0; i < data.length; i += 4){
+    data[i] = gradient[data[i] * 4]
+    data[i + 1] = gradient[data[i + 1] * 4 + 1]
+    data[i + 2] = gradient[data[i + 2] * 4 + 1]
+  }
+  return data
+}
+
+const makeGradient = (color1, color2) => {
+  return gradientMap(hexToRGB(color1), hexToRGB(color2))
+}
+
+// function promisifiedGradient(color1, color2) {
+//   return new Promise(function(resolve, reject) {
+//     makeGradient(color1, color2, function(err, gradient){
+//       if (err) reject(err)
+//       else resolve(gradient)
+//     })
+//   })
+// }
+
+const processImg = (color1, color2, data) => {
+  let gradient = makeGradient(color1, color2)
+  let grayData = convertToGrayScale(data)
+  console.log('GRAYDATA IS ', grayData)
+
+  let duoTone = convertToDuotone(gradient, grayData)
+//  console.log('DUOTONE IS ', duoTone)
+  return duoTone
+}
+
+module.exports = {
+  processImg
+}
 
 
 /***/ })

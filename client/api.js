@@ -7,12 +7,6 @@ const uploadFile = (data) => {
     .catch(err => console.error(err))
 }
 
-// const sayHello = () =>
-//  axios.get('/api/hello')
-//     .then(response => response)
-//     .catch(err => console.error(err))
-
 module.exports = {
-  // sayHello,
   uploadFile
 }
