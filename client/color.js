@@ -41,22 +41,10 @@ const makeGradient = (color1, color2) => {
   return gradientMap(hexToRGB(color1), hexToRGB(color2))
 }
 
-// function promisifiedGradient(color1, color2) {
-//   return new Promise(function(resolve, reject) {
-//     makeGradient(color1, color2, function(err, gradient){
-//       if (err) reject(err)
-//       else resolve(gradient)
-//     })
-//   })
-// }
-
 const processImg = (color1, color2, data) => {
   let gradient = makeGradient(color1, color2)
   let grayData = convertToGrayScale(data)
-  console.log('GRAYDATA IS ', grayData)
-
   let duoTone = convertToDuotone(gradient, grayData)
-//  console.log('DUOTONE IS ', duoTone)
   return duoTone
 }
 

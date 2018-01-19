@@ -946,7 +946,12 @@ let img = document.getElementById('myImage')
 
 let staticColor1 = document.getElementById('color1').value
 let staticColor2 = document.getElementById('color2').value
-console.log('STATICCOLOR2 IS ', staticColor2)
+
+const setCanvas = () => {
+  canvas.height = img.height
+  canvas.width = img.width
+  ctx.drawImage(img, 0, 0)
+}
 
 document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
   evt.preventDefault()
@@ -955,58 +960,36 @@ document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
 
   api.uploadFile(formData)
   .then((response) => {
-    //let img = document.getElementById('myImage')
     img.src = response.data
     return img
   })
   .then(img => {
-    canvas.height = img.height
-    canvas.width = img.width
-    ctx.drawImage(img, 0, 0)
-
+    setCanvas()
     //returns Image obj with data as Uint8ClampedArray with 4 values per pixel
-   // console.log(ctx.getImageData(0, 0, img.width, img.height))
     return ctx.getImageData(0, 0, img.width, img.height)
   })
   .then(pixelsObj => {
-    //convert to grayscale
-   // pixelsObj.data = convertToGrayScale(pixelsObj.data)
     pixelsObj.data = color.processImg(staticColor1, staticColor2, pixelsObj.data)
     ctx.putImageData(pixelsObj, 0, 0)
-    return pixelsObj
-  })
-  .then(pixelsObj => {
-    //duotones
-
     return pixelsObj
   })
   .catch(err => console.error(err))
 })
 
-//function that takes in two hex color values and an array of pixel data and outputs an array of pixel data in duotone for given colors
-
 document.getElementById('color1').addEventListener('change', function(evt){
-  canvas.height = img.height
-  canvas.width = img.width
-  ctx.drawImage(img, 0, 0)
-
+  setCanvas()
   let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
   staticColor1 = evt.target.value
   pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
   ctx.putImageData(pixelsChange, 0, 0)
-
 })
 
 document.getElementById('color2').addEventListener('change', function(evt){
-  canvas.height = img.height
-  canvas.width = img.width
-  ctx.drawImage(img, 0, 0)
-
+  setCanvas()
   let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
   staticColor2 = evt.target.value
   pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
   ctx.putImageData(pixelsChange, 0, 0)
-
 })
 
 
@@ -1965,22 +1948,10 @@ const makeGradient = (color1, color2) => {
   return gradientMap(hexToRGB(color1), hexToRGB(color2))
 }
 
-// function promisifiedGradient(color1, color2) {
-//   return new Promise(function(resolve, reject) {
-//     makeGradient(color1, color2, function(err, gradient){
-//       if (err) reject(err)
-//       else resolve(gradient)
-//     })
-//   })
-// }
-
 const processImg = (color1, color2, data) => {
   let gradient = makeGradient(color1, color2)
   let grayData = convertToGrayScale(data)
-  console.log('GRAYDATA IS ', grayData)
-
   let duoTone = convertToDuotone(gradient, grayData)
-//  console.log('DUOTONE IS ', duoTone)
   return duoTone
 }
 
