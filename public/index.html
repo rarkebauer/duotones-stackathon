@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>file metadata microservice</title>
-</head>
-<body>
-  <p>submit an image to convert it to duotones</p>
-<form enctype='multipart/form-data' id="uploadSubmit">
-    <input type='file' name='file' class='form-control'/>
-    <button type='submit'>Submit</button>
-</form>
-  <input type="color" id="color1" value="#000000">
-  <input type="color" id="color2" value="#91f1f4">
-  <img id="myImage"/>
-  <canvas id="canvasId"></canvas>
-  <script src="./bundle.js"></script>
-</body>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width initial-scale=1.0'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <title>file metadata microservice</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="all">
+    <h1>Duotone Image Filter</h1>
+    <form enctype='multipart/form-data' id="uploadSubmit" class="form-inline">
+      <div class="custom-file">
+
+          <input type='file' name='file'>
+          <button type='submit' class="btn btn-primary">Submit</button>
+
+      </div>
+      </form>
+      <!-- <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label" for="customFile">Upload image</label>
+        </div> -->
+    <div id="color-input">
+      <input type="color" id="color1" value="#000000">
+      <input type="color" id="color2" value="#91f1f4">
+    </div>
+    <div id="images">
+      <img id="myImage"/>
+      <canvas id="canvasId"></canvas>
+    </div>
+  </div>
+    <script src="./bundle.js"></script>
+  </body>
 </html>
 

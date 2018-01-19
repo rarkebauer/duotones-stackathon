@@ -42,6 +42,7 @@ document.getElementById('color1').addEventListener('change', function(evt){
   setCanvas()
   let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
   staticColor1 = evt.target.value
+
   pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
   ctx.putImageData(pixelsChange, 0, 0)
 })

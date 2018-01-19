@@ -980,6 +980,7 @@ document.getElementById('color1').addEventListener('change', function(evt){
   setCanvas()
   let pixelsChange = ctx.getImageData(0, 0, img.width, img.height)
   staticColor1 = evt.target.value
+
   pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
   ctx.putImageData(pixelsChange, 0, 0)
 })
@@ -1913,7 +1914,7 @@ const hexToRGB = (hex) => {
 }
 
 const gradientMap = (color1, color2) => {
-  let gradient = []
+  var gradient = []
   //build an array of length 256 between color 1 and color 2 to match the values from 0 to 255
   for (let k = 0; k < (256 * 4); k += 4){
     gradient[k] = ((256 - (k / 4)) * color1.red + (k / 4) * color2.red) / 256
@@ -1939,7 +1940,7 @@ const convertToDuotone = (gradient, data) => {
   for (let i = 0; i < data.length; i += 4){
     data[i] = gradient[data[i] * 4]
     data[i + 1] = gradient[data[i + 1] * 4 + 1]
-    data[i + 2] = gradient[data[i + 2] * 4 + 1]
+    data[i + 2] = gradient[data[i + 2] * 4 + 2]
   }
   return data
 }

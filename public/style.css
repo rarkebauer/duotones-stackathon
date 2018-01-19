@@ -1,0 +1,42 @@
+body {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#all {
+  display: inline-block;
+}
+
+#uploadSubmit {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+#color1 {
+  display: inline-block;
+  width: 25%
+}
+
+#color2 {
+  display: inline-block;
+  width: 25%
+}
+
+#color-input {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 1em;
+}
+
+#images {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  display: none;
+}
