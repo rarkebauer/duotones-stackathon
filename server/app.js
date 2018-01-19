@@ -21,9 +21,9 @@ let upload = multer({dest: 'uploads/', storage })
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")))
 
-app.get('/api/hello', (req, res, next) => {
-  res.json({hello: 'hello from the backend!'})
-})
+// app.get('/api/hello', (req, res, next) => {
+//   res.json({hello: 'hello from the backend!'})
+// })
 
 app.post('/uploadFile', upload.single('file'), function(req, res, next){
   let buffer = req.file.buffer

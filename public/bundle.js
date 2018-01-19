@@ -957,9 +957,6 @@ let ctx = canvas.getContext('2d')
 
 document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
   evt.preventDefault()
-  //console.dir(evt.target.file)
-  //const file = evt.target.file.files[0]
-  //const fileName = file.name
   const formData = new FormData(document.getElementById('uploadSubmit'))
   formData.append('file', formData)
 
@@ -979,7 +976,7 @@ document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
     ctx.drawImage(img, 0, 0)
 
     //returns Image obj with data as Uint8ClampedArray with 4 values per pixel
-    console.log(ctx.getImageData(0, 0, img.width, img.height))
+   // console.log(ctx.getImageData(0, 0, img.width, img.height))
     return ctx.getImageData(0, 0, img.width, img.height)
   })
   .then(pixelsObj => {
@@ -1026,13 +1023,13 @@ const uploadFile = (data) => {
     .catch(err => console.error(err))
 }
 
-const sayHello = () =>
- axios.get('/api/hello')
-    .then(response => response)
-    .catch(err => console.error(err))
+// const sayHello = () =>
+//  axios.get('/api/hello')
+//     .then(response => response)
+//     .catch(err => console.error(err))
 
 module.exports = {
-  sayHello,
+  // sayHello,
   uploadFile
 }
 
