@@ -26,11 +26,7 @@ app.get('/api/hello', (req, res, next) => {
 })
 
 app.post('/uploadFile', upload.single('file'), function(req, res, next){
-  //console.log('REQ IS ', req)
-  console.log('is req.files defined? ', req.files)
-  console.log('is req.file defined? ', req.file)
   let buffer = req.file.buffer
-  console.log('buffer is ', buffer)
   let imgjpg = imageFile.makeImage(buffer)
   res.send(imgjpg)
 })
