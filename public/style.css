@@ -5,6 +5,10 @@ body {
 h1 {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 4em;
+  text-shadow: 0.03em 0.03em #d449b6db;
+  color: #1b0584;
 }
 
 #all {
@@ -18,12 +22,12 @@ h1 {
 
 #color1 {
   display: inline-block;
-  width: 25%
+  width: 25%;
 }
 
 #color2 {
   display: inline-block;
-  width: 25%
+  width: 25%;
 }
 
 #color-input {
@@ -37,6 +41,39 @@ h1 {
   justify-content: center;
 }
 
+#canvasId {
+  max-width: 95%;
+  height: auto;
+}
+
 img {
   display: none;
 }
+
+#download {
+  display: none;
+  font-family: 'Ubuntu', sans-serif;
+  margin-bottom: 0.5em;
+  color: #1b0584;
+  /* transition: ease cubic-bezier(0.39, 0.575, 0.565, 1) */
+}
+
+.btn.btn-primary {
+  background-color: #1b0584;
+  border-color: #d449b6db;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus,
+.btn.btn-primary:active,
+.btn.btn-primary.active {
+  color: #ede24e;
+  background-color: #1b0584;
+  border-color: #d449b6db;
+}
+
+form {
+  color: #1b0584;
+}
+
+

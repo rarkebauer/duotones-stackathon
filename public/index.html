@@ -4,7 +4,8 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width initial-scale=1.0'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <title>file metadata microservice</title>
+    <title>Duotone Image Filter</title>
+    <link href="https://fonts.googleapis.com/css?family=Supermercado+One" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
@@ -14,22 +15,19 @@
       <div class="custom-file">
 
           <input type='file' name='file'>
-          <button type='submit' class="btn btn-primary">Submit</button>
+          <button type='submit' class="btn btn-primary" id="button">Upload Image</button>
 
       </div>
       </form>
-      <!-- <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile">
-          <label class="custom-file-label" for="customFile">Upload image</label>
-        </div> -->
+      <span id="download">right click or control click to save your creation</span>
     <div id="color-input">
-      <input type="color" id="color1" value="#000000">
-      <input type="color" id="color2" value="#91f1f4">
+      <input type="color" id="color1" value="#1b0584">
+      <input type="color" id="color2" value="#ede24e">
     </div>
-    <div id="images">
+
       <img id="myImage"/>
-      <canvas id="canvasId"></canvas>
-    </div>
+      <canvas id="canvasId" alt="right click to download"></canvas>
+
   </div>
     <script src="./bundle.js"></script>
   </body>

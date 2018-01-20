@@ -4,8 +4,6 @@ const color = require('./color')
 let canvas = document.getElementById('canvasId')
 let ctx = canvas.getContext('2d')
 let img = document.getElementById('myImage')
-
-
 let staticColor1 = document.getElementById('color1').value
 let staticColor2 = document.getElementById('color2').value
 
@@ -27,7 +25,7 @@ document.getElementById('uploadSubmit').addEventListener('submit', (evt) => {
   })
   .then(img => {
     setCanvas()
-    //returns Image obj with data as Uint8ClampedArray with 4 values per pixel
+    //returns image object with data as Uint8ClampedArray with 4 values per pixel
     return ctx.getImageData(0, 0, img.width, img.height)
   })
   .then(pixelsObj => {
@@ -53,4 +51,12 @@ document.getElementById('color2').addEventListener('change', function(evt){
   staticColor2 = evt.target.value
   pixelsChange.data = color.processImg(staticColor1, staticColor2, pixelsChange.data)
   ctx.putImageData(pixelsChange, 0, 0)
+})
+
+const span = document.getElementById('download')
+document.getElementById('button').addEventListener('click', function(){
+  if (span.style.display === ''){
+    span.style.display = 'block'
+
+  }
 })
