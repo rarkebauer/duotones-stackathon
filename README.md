@@ -40,7 +40,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Author
 
-* **Rachel Arkebauer** - [Github](https://github.com/rarkebauer)
+### Rachel Arkebauer - [Github](https://github.com/rarkebauer)
 
 ## License
 
@@ -48,6 +48,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Special thanks to Matt Kandler and his blog post about duotone filtering
-[Duotone Image Filtering in Javascript](http://www.mattkandler.com/blog/duotone-image-filter-javascript-rails)
+* Special thanks to Matt Kandler and his blog post [Duotone Image Filtering in Javascript](http://www.mattkandler.com/blog/duotone-image-filter-javascript-rails)
 
